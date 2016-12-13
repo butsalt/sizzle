@@ -93,6 +93,10 @@ var i,
 		// 1. quoted (capture 3; capture 4 or capture 5)
 		"('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|" +
 		// 2. simple (capture 6)
+		// \后面可以接除newline外的任意字符
+		// 不允许单独出现\()[]，理由在于
+		//     pseudos内不允许单独出现()
+		//     [...]的场合用attributes匹配
 		"((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
 		// 3. anything else (capture 2)
 		".*" +
