@@ -96,7 +96,7 @@ var i,
 		"((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
 		// 3. anything else (capture 2)
 		".*" +
-		// (?:)内以|结尾，可以实现可选择地匹配|前的条件，不匹配的情况下也不会留下空字符串
+		// (?:)内以|结尾，可以实现可选择地匹配|前的条件，|前的条件不匹配的情况下(?:)也不会空字符串
 		")\\)|)",
 
 	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
