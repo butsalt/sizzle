@@ -2151,6 +2151,8 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 			selector = selector.slice( tokens.shift().value.length );
 		}
 
+		// 只要选择器不以[>+~]开始，且不以序号条件结束，就可以寻找seed从而优化性能
+		// seed就是可能成为结果的元素
 		// Fetch a seed set for right-to-left matching
 		i = matchExpr["needsContext"].test( selector ) ? 0 : tokens.length;
 		while ( i-- ) {
