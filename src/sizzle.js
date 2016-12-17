@@ -1647,11 +1647,13 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 	}
 
 	soFar = selector;
+	// ,隔开的每个选择器都是一个group
 	groups = [];
 	preFilters = Expr.preFilter;
 
 	while ( soFar ) {
 
+		// 判断soFar目前是否遭遇,，如果是则新创见一个group
 		// Comma and first run
 		if ( !matched || (match = rcomma.exec( soFar )) ) {
 			if ( match ) {
@@ -1663,6 +1665,7 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 
 		matched = false;
 
+		// 判断soFar目前是否遭遇关系选择器
 		// Combinators
 		if ( (match = rcombinators.exec( soFar )) ) {
 			matched = match.shift();
@@ -1674,9 +1677,11 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 			soFar = soFar.slice( matched.length );
 		}
 
+		// 判断soFar目前是否遭遇一般选择器
 		// Filters
 		for ( type in Expr.filter ) {
 			if ( (match = matchExpr[ type ].exec( soFar )) && (!preFilters[ type ] ||
+				// 如果当前type有preFilter，则把match经过preFilter再次组装
 				(match = preFilters[ type ]( match ))) ) {
 				matched = match.shift();
 				tokens.push({
