@@ -1946,9 +1946,11 @@ function matcherFromTokens( tokens ) {
 		} ];
 
 	for ( ; i < len; i++ ) {
+		// 如果遭遇位置选择器，用位置选择器查找到目标元素，再用目标元素作参数来执行matchers
 		if ( (matcher = Expr.relative[ tokens[i].type ]) ) {
 			matchers = [ addCombinator(elementMatcher( matchers ), matcher) ];
 		} else {
+			// 如果未遭遇位置选择器，则利用token的matches来生成matcher
 			matcher = Expr.filter[ tokens[i].type ].apply( null, tokens[i].matches );
 
 			// Return special upon seeing a positional matcher
