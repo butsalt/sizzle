@@ -1997,7 +1997,6 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				dirrunsUnique = (dirruns += contextBackup == null ? 1 : Math.random() || 0.1),
 				len = elems.length;
 
-			// outermost是context当前可用的最顶层
 			if ( outermost ) {
 				outermostContext = context === document || context || outermost;
 			}
