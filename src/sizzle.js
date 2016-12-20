@@ -1954,7 +1954,7 @@ function matcherFromTokens( tokens ) {
 			matcher = Expr.filter[ tokens[i].type ].apply( null, tokens[i].matches );
 
 			// Return special upon seeing a positional matcher
-			// 有expando时说明遇到必须依次执行的非关系选择器了(:first,:even:,...)
+			// 有expando时说明从这里开始接下来的非关系选择器要依次执行(:first,:even:,...)
 			// .cls:first :first.cls 意义不同
 			if ( matcher[ expando ] ) {
 				// Find the next relative operator (if any) for proper handling
@@ -1965,14 +1965,20 @@ function matcherFromTokens( tokens ) {
 					}
 				}
 				return setMatcher(
+					// 前置matcher
 					i > 1 && elementMatcher( matchers ),
+					// 前置选择器语句
 					i > 1 && toSelector(
 						// If the preceding token was a descendant combinator, insert an implicit any-element `*`
 						tokens.slice( 0, i - 1 ).concat({ value: tokens[ i - 2 ].type === " " ? "*" : "" })
 					).replace( rtrim, "$1" ),
+					// 要开始依次执行的matcher
 					matcher,
+					// 必须在前面一个matcher执行完后再执行的matcher(由非关系选择器构成)
 					i < j && matcherFromTokens( tokens.slice( i, j ) ),
+					// 后置matcher
 					j < len && matcherFromTokens( (tokens = tokens.slice( j )) ),
+					// 后置选择器语句
 					j < len && toSelector( tokens )
 				);
 			}
@@ -2110,7 +2116,7 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
 		i = match.length;
 		while ( i-- ) {
 			cached = matcherFromTokens( match[i] );
-			// 有expando的是含有必须依次执行的非关系选择器的matcher
+			// 有expando的是含有诸如:first,:odd此类选择器的matcher
 			if ( cached[ expando ] ) {
 				setMatchers.push( cached );
 			} else {
