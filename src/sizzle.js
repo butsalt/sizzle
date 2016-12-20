@@ -2212,6 +2212,7 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 		context,
 		!documentIsHTML,
 		results,
+		//修正后的上下文，如果选择器语句以+或~开头，那么实际的上下文应是context.parentNode
 		!context || rsibling.test( selector ) && testContext( context.parentNode ) || context
 	);
 	return results;
