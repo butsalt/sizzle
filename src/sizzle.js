@@ -1954,7 +1954,8 @@ function matcherFromTokens( tokens ) {
 			matcher = Expr.filter[ tokens[i].type ].apply( null, tokens[i].matches );
 
 			// Return special upon seeing a positional matcher
-			// 有expando时说明遇到必须依次执行的非关系选择器了
+			// 有expando时说明遇到必须依次执行的非关系选择器了(:first,:even:,...)
+			// .cls:first :first.cls 意义不同
 			if ( matcher[ expando ] ) {
 				// Find the next relative operator (if any) for proper handling
 				j = ++i;
