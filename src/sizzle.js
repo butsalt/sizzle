@@ -2007,7 +2007,10 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				dirrunsUnique = (dirruns += contextBackup == null ? 1 : Math.random() || 0.1),
 				len = elems.length;
 
+			// 当outermost为真值时，说明当前这个matcher是运行在最外层的
+			// 当outermost为假值时，说明当前这个matcher是作为子级在运行的
 			if ( outermost ) {
+				// outermostContext是最外层matcher的上下文
 				outermostContext = context === document || context || outermost;
 			}
 
