@@ -1677,7 +1677,7 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 			soFar = soFar.slice( matched.length );
 		}
 
-		// 判断soFar目前是否遭遇一般选择器
+		// 判断soFar目前是否遭遇非关系选择器
 		// Filters
 		for ( type in Expr.filter ) {
 			if ( (match = matchExpr[ type ].exec( soFar )) && (!preFilters[ type ] ||
@@ -1946,14 +1946,15 @@ function matcherFromTokens( tokens ) {
 		} ];
 
 	for ( ; i < len; i++ ) {
-		// 如果遭遇位置选择器，用位置选择器查找到目标元素，再用目标元素作参数来执行matchers
+		// 如果遭遇关系选择器，用关系选择器查找到目标元素，再用目标元素作参数来执行matchers
 		if ( (matcher = Expr.relative[ tokens[i].type ]) ) {
 			matchers = [ addCombinator(elementMatcher( matchers ), matcher) ];
 		} else {
-			// 如果未遭遇位置选择器，则利用token的matches来生成matcher
+			// 如果未遭遇关系选择器，则利用token的matches来生成matcher
 			matcher = Expr.filter[ tokens[i].type ].apply( null, tokens[i].matches );
 
 			// Return special upon seeing a positional matcher
+			// 有expando时说明遇到必须依次执行的非关系选择器了
 			if ( matcher[ expando ] ) {
 				// Find the next relative operator (if any) for proper handling
 				j = ++i;
@@ -1990,6 +1991,8 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				i = "0",
 				unmatched = seed && [],
 				setMatched = [],
+				// :not选择器内可以放一个完整的selector语法，
+				// 这个selector语法在执行时，要先将父级的outermostContext备份，执行完毕后恢复
 				contextBackup = outermostContext,
 				// We must always have either seed elements or outermost context
 				elems = seed || byElement && Expr.find["TAG"]( "*", outermost ),
