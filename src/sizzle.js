@@ -2004,6 +2004,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				// We must always have either seed elements or outermost context
 				elems = seed || byElement && Expr.find["TAG"]( "*", outermost ),
 				// Use integer dirruns iff this is the outermost matcher
+				// 每一级的superMatcher在执行时都有一个唯一的dirruns
 				dirrunsUnique = (dirruns += contextBackup == null ? 1 : Math.random() || 0.1),
 				len = elems.length;
 
@@ -2030,6 +2031,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 							break;
 						}
 					}
+					// 恢复可能被子级superMatcher修改的dirruns
 					if ( outermost ) {
 						dirruns = dirrunsUnique;
 					}
