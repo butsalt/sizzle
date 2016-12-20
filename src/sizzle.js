@@ -1647,13 +1647,13 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 	}
 
 	soFar = selector;
-	// ,隔开的每个选择器都是一个group
+	// ,隔开的每个选择器语句都是一个group
 	groups = [];
 	preFilters = Expr.preFilter;
 
 	while ( soFar ) {
 
-		// 判断soFar目前是否遭遇,，如果是则新创见一个group
+		// 判断soFar目前是否遭遇,，如果是则新创建一个group
 		// Comma and first run
 		if ( !matched || (match = rcomma.exec( soFar )) ) {
 			if ( match ) {
@@ -1950,7 +1950,7 @@ function matcherFromTokens( tokens ) {
 		if ( (matcher = Expr.relative[ tokens[i].type ]) ) {
 			matchers = [ addCombinator(elementMatcher( matchers ), matcher) ];
 		} else {
-			// 如果未遭遇关系选择器，则利用token的matches来生成matcher
+			// 如果未遭遇关系选择器，则利用token来生成matcher
 			matcher = Expr.filter[ tokens[i].type ].apply( null, tokens[i].matches );
 
 			// Return special upon seeing a positional matcher
@@ -1992,8 +1992,8 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				i = "0",
 				unmatched = seed && [],
 				setMatched = [],
-				// :not选择器内可以放一个完整的selector语法，
-				// 这个selector语法在执行时，要先将父级的outermostContext备份，执行完毕后恢复
+				// :not选择器内可以放一个选择器语句，
+				// 这个子级的选择器语句在执行时，要先将父级的outermostContext备份，执行完毕后恢复
 				contextBackup = outermostContext,
 				// We must always have either seed elements or outermost context
 				elems = seed || byElement && Expr.find["TAG"]( "*", outermost ),
@@ -2110,6 +2110,7 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
 		i = match.length;
 		while ( i-- ) {
 			cached = matcherFromTokens( match[i] );
+			// 有expando的是含有必须依次执行的非关系选择器的matcher
 			if ( cached[ expando ] ) {
 				setMatchers.push( cached );
 			} else {
@@ -2163,8 +2164,8 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 			selector = selector.slice( tokens.shift().value.length );
 		}
 
-		// 只要选择器不以[>+~]开始，且不以序号条件结束，就可以寻找seed从而优化性能
-		// seed就是可能成为结果的元素
+		// 只要选择器语句不以[>+~]开始，且不以序号条件结束，就可以寻找seed从而优化性能
+		// seed包含了所有可能成为结果的元素
 		// Fetch a seed set for right-to-left matching
 		i = matchExpr["needsContext"].test( selector ) ? 0 : tokens.length;
 		while ( i-- ) {
