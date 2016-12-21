@@ -1970,6 +1970,7 @@ function matcherFromTokens( tokens ) {
 					// 前置选择器语句
 					i > 1 && toSelector(
 						// If the preceding token was a descendant combinator, insert an implicit any-element `*`
+						// 因为 ' '会被trim掉
 						tokens.slice( 0, i - 1 ).concat({ value: tokens[ i - 2 ].type === " " ? "*" : "" })
 					).replace( rtrim, "$1" ),
 					// 要开始依次执行的matcher
