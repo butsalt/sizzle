@@ -1946,7 +1946,7 @@ function matcherFromTokens( tokens ) {
 		} ];
 
 	for ( ; i < len; i++ ) {
-		// 如果遭遇关系选择器，用关系选择器查找到目标元素，再用目标元素作参数来执行matchers
+		// 如果遭遇关系选择器，用关系选择器逆向查找到目标元素，再用目标元素作参数来执行matchers
 		if ( (matcher = Expr.relative[ tokens[i].type ]) ) {
 			matchers = [ addCombinator(elementMatcher( matchers ), matcher) ];
 		} else {
