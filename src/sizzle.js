@@ -1835,20 +1835,33 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 	if ( postFinder && !postFinder[ expando ] ) {
 		postFinder = setMatcher( postFinder, postSelector );
 	}
+	// 如果该函数作为postFinder被调用，seed为null，context会是一个数组
 	return markFunction(function( seed, results, context, xml ) {
 		var temp, i, elem,
 			preMap = [],
 			postMap = [],
+			// 同期第二个setMatcher起，results里可能有元素
 			preexisting = results.length,
 
 			// Get initial elements from seed or context
 			elems = seed || multipleContexts( selector || "*", context.nodeType ? [ context ] : context, [] ),
 
 			// Prefilter to get matcher input, preserving a map for seed-results synchronization
+			// 没有seed但存在selector的场合，用selector查找获得的elems相当于已经被preFilter过滤过了
 			matcherIn = preFilter && ( seed || !selector ) ?
 				condense( elems, preMap, preFilter, context, xml ) :
 				elems,
 
+			// matcherOut是matcherIn经matcher过滤后的结果
+			//     没有matcher
+			//         直接使用matcherIn
+			//     有matcher
+			//         有seed
+			//             有preFilter，使用[]
+			//             没有preFilter，使用results
+			//         没有seed
+			//             results里有元素或有postFilter，使用[]
+			//             results里没有元素并且没有postFilter，使用results
 			matcherOut = matcher ?
 				// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting results,
 				postFinder || ( seed ? preFilter : preexisting || postFilter ) ?
