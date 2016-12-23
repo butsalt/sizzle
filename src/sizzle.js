@@ -1835,6 +1835,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 	if ( postFinder && !postFinder[ expando ] ) {
 		postFinder = setMatcher( postFinder, postSelector );
 	}
+	// 如果调用Sizzle函数时，未传入seed，且selector包含多个选择器语句，那么seed为null
 	// 如果该函数作为postFinder被调用，seed为null，context会是一个数组
 	return markFunction(function( seed, results, context, xml ) {
 		var temp, i, elem,
