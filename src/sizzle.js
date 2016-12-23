@@ -2012,6 +2012,7 @@ function matcherFromTokens( tokens ) {
 function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 	var bySet = setMatchers.length > 0,
 		byElement = elementMatchers.length > 0,
+		// 如果调用Sizzle函数时，未传入seed，且selector包含多个选择器语句，那么seed为null
 		superMatcher = function( seed, context, xml, results, outermost ) {
 			var elem, j, matcher,
 				matchedCount = 0,
