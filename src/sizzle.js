@@ -1829,7 +1829,10 @@ function condense( unmatched, map, filter, context, xml ) {
 }
 
 function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postSelector ) {
+	// matcherFromTokens生成的filter只能判断一个元素是否能通过验证
+	// 用setMatcher包装后，可传入seed，并通过results获取过滤后的结果
 	if ( postFilter && !postFilter[ expando ] ) {
+		//作为postFilter，调用时seed肯定存在，不需要也不应该用selector查找seed的备选项
 		postFilter = setMatcher( postFilter );
 	}
 	if ( postFinder && !postFinder[ expando ] ) {
@@ -1905,6 +1908,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 							temp.push( (matcherIn[i] = elem) );
 						}
 					}
+					// temp是前面matcherOut的结果，也是当前寻找result的上下文
 					postFinder( null, (matcherOut = []), temp, xml );
 				}
 
@@ -1927,6 +1931,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 					matcherOut
 			);
 			if ( postFinder ) {
+				// 结果会被注入到results
 				postFinder( null, results, matcherOut, xml );
 			} else {
 				push.apply( results, matcherOut );
