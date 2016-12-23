@@ -2060,6 +2060,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				// Track unmatched elements for set filters
 				if ( bySet ) {
 					// They will have gone through all possible matchers
+					// 一个elementMatcher都没有遇到时，matcher为null
 					if ( (elem = !matcher && elem) ) {
 						matchedCount--;
 					}
