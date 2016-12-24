@@ -2023,6 +2023,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				// 这个子级的选择器语句在执行时，要先将父级的outermostContext备份，执行完毕后恢复
 				contextBackup = outermostContext,
 				// We must always have either seed elements or outermost context
+				// 如果没有seed且至少有一个elementMatcher，则查找outermost下所有元素作为备选项
 				elems = seed || byElement && Expr.find["TAG"]( "*", outermost ),
 				// Use integer dirruns iff this is the outermost matcher
 				// 每一级的superMatcher在执行时都有一个唯一的dirruns
@@ -2061,12 +2062,13 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				// Track unmatched elements for set filters
 				if ( bySet ) {
 					// They will have gone through all possible matchers
-					// 一个elementMatcher都没有遇到时，matcher为null
+					// 经历了所有的elementMatchers仍还未匹配时，matcher为null
 					if ( (elem = !matcher && elem) ) {
 						matchedCount--;
 					}
 
 					// Lengthen the array for every element, matched or not
+					// 如果后选项来自seed，不管是否匹配都放到unmatched中
 					if ( seed ) {
 						unmatched.push( elem );
 					}
@@ -2075,6 +2077,8 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 
 			// `i` is now the count of elements visited above, and adding it to `matchedCount`
 			// makes the latter nonnegative.
+			// i是所有访问过的元素个数
+			// 计算后matchedCount的值代表已匹配的个数
 			matchedCount += i;
 
 			// Apply set filters to unmatched elements
@@ -2084,6 +2088,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 			// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
 			// case, which will result in a "00" `matchedCount` that differs from `i` but is also
 			// numerically zero.
+			// 如果elementMatchers数量为0，则 i为'0'，matchedCount为'00'
 			if ( bySet && i !== matchedCount ) {
 				j = 0;
 				while ( (matcher = setMatchers[j++]) ) {
