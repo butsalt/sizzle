@@ -1427,6 +1427,7 @@ Expr = Sizzle.selectors = {
 
 	pseudos: {
 		// Potentially complex pseudos
+		// 被expando标记的function不是matcher，而是生成matcher
 		"not": markFunction(function( selector ) {
 			// Trim the selector passed to compile
 			// to avoid treating leading and trailing
@@ -1435,7 +1436,9 @@ Expr = Sizzle.selectors = {
 				results = [],
 				matcher = compile( selector.replace( rtrim, "$1" ) );
 
+			// 选择器语句组生成的matcher列表中有setMatcher时，会标记expando
 			return matcher[ expando ] ?
+				//被expando标记的matcher后续会用来生成setMatcher
 				markFunction(function( seed, matches, context, xml ) {
 					var elem,
 						unmatched = matcher( seed, null, xml, [] ),
