@@ -1869,9 +1869,11 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 			//             有seed
 			//                 有preFilter，使用[]
 			//                 没有preFilter，使用results
+			//                  （因为seed经过preFilter过滤后生成的备选项可能会缩短seed从而影响index）
 			//             没有seed
 			//                 results里有元素或有postFilter，使用[]
 			//                 results里没有元素并且没有postFilter，使用results
+			//                  （因为没有seed的情况下，每次selector生成的备选项index都是从0开始的）
 			matcherOut = matcher ?
 				// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting results,
 				postFinder || ( seed ? preFilter : preexisting || postFilter ) ?
@@ -1891,7 +1893,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 		// Apply postFilter
 		if ( postFilter ) {
 			temp = condense( matcherOut, postMap );
-			// temp中匹配的元素对应下标上的位置会被替换成false
+			// temp中匹配的元素对应下标上的位置会被替换成false，[]对应下标上赋值成这个元素
 			postFilter( temp, [], context, xml );
 
 			// Un-match failing elements by moving them back to matcherIn
