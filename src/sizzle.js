@@ -1869,11 +1869,11 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 			//             有seed
 			//                 有preFilter，使用[]
 			//                 没有preFilter，使用results
-			//                  （因为seed经过preFilter过滤后生成的备选项可能会缩短seed从而影响index）
+			//                  (因为seed经过preFilter过滤后生成的备选项可能会缩短seed从而影响index)
 			//             没有seed
 			//                 results里有元素或有postFilter，使用[]
 			//                 results里没有元素并且没有postFilter，使用results
-			//                  （因为没有seed的情况下，每次selector生成的备选项index都是从0开始的）
+			//                  (因为没有seed的情况下，每次selector生成的备选项index都是从0开始的)
 			matcherOut = matcher ?
 				// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting results,
 				postFinder || ( seed ? preFilter : preexisting || postFilter ) ?
