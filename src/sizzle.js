@@ -1934,13 +1934,15 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 
 		// Add elements to results, through postFinder if defined
 		} else {
+			// 去掉此次匹配结果中为undefined的元素
 			matcherOut = condense(
 				matcherOut === results ?
 					matcherOut.splice( preexisting, matcherOut.length ) :
 					matcherOut
 			);
 			if ( postFinder ) {
-				// 结果会被注入到results
+				// matcherOut内的每个元素都是上下文
+				// 最终匹配的元素还是被push到results的尾端
 				postFinder( null, results, matcherOut, xml );
 			} else {
 				push.apply( results, matcherOut );
