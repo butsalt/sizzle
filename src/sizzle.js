@@ -1893,6 +1893,8 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 
 		// Apply postFilter
 		if ( postFilter ) {
+			// postMap记录了每个元素在matcherOut的下标
+			// matcherOut的下标与postMap的下标一一对应
 			temp = condense( matcherOut, postMap );
 			postFilter( temp, [], context, xml );
 
@@ -1900,6 +1902,9 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 			i = temp.length;
 			while ( i-- ) {
 				if ( (elem = temp[i]) ) {
+					// 还存在于temp里的元素就是未匹配的
+					// matcherIn对应下标上从false改为元素
+					// matcherOut对应下标上从元素改为false
 					matcherOut[ postMap[i] ] = !(matcherIn[ postMap[i] ] = elem);
 				}
 			}
@@ -1934,7 +1939,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 
 		// Add elements to results, through postFinder if defined
 		} else {
-			// 去掉此次匹配结果中为undefined的元素，因为matcherOut如果接下来作为multipleContexts上下文的则不能存在空项
+			// 去掉此次匹配结果中为undefined，false的元素，因为matcherOut如果接下来作为multipleContexts上下文的只能是元素
 			matcherOut = condense(
 				matcherOut === results ?
 					matcherOut.splice( preexisting, matcherOut.length ) :
