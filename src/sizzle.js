@@ -1842,6 +1842,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 	if ( postFinder && !postFinder[ expando ] ) {
 		postFinder = setMatcher( postFinder, postSelector );
 	}
+	// 如果seed存在，被匹配上的元素在seed里对应下标处会被置为false，results里对应下标处赋值成这个元素
 	// 如果调用Sizzle函数时，未传入seed，且selector包含多个选择器语句，那么seed为null
 	// 如果该函数作为postFinder被调用，seed为null，context会是一个数组
 	return markFunction(function( seed, results, context, xml ) {
@@ -1893,7 +1894,6 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 		// Apply postFilter
 		if ( postFilter ) {
 			temp = condense( matcherOut, postMap );
-			// temp中匹配的元素对应下标上的位置会被替换成false，[]对应下标上赋值成这个元素
 			postFilter( temp, [], context, xml );
 
 			// Un-match failing elements by moving them back to matcherIn
@@ -1934,7 +1934,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 
 		// Add elements to results, through postFinder if defined
 		} else {
-			// 去掉此次匹配结果中为undefined的元素
+			// 去掉此次匹配结果中为undefined的元素，因为matcherOut如果接下来作为multipleContexts上下文的则不能存在空项
 			matcherOut = condense(
 				matcherOut === results ?
 					matcherOut.splice( preexisting, matcherOut.length ) :
