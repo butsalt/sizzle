@@ -76,6 +76,7 @@ var i,
 
 	// http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
 	// \后面可以接除newline外的任意一个字符
+	// '[\0-\\xa0]' 相当于是 '[\\x00-\\xa0]'
 	identifier = "(?:\\\\.|[\\w-]|[^\0-\\xa0])+",
 
 	// Attribute selectors: http://www.w3.org/TR/selectors/#attribute-selectors
