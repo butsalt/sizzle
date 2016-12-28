@@ -105,6 +105,10 @@ var i,
 
 	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
 	rwhitespace = new RegExp( whitespace + "+", "g" ),
+	// str.replace(rtrim, '$1')
+	// ' abc' => ' ' => ''
+	// 'abc ' => '(c) ' => 'c'
+	// 'abc\\  ' => '(c\\ ) ' => 'c\\ '
 	rtrim = new RegExp( "^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$", "g" ),
 
 	rcomma = new RegExp( "^" + whitespace + "*," + whitespace + "*" ),
