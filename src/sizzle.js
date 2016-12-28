@@ -2084,7 +2084,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 					}
 
 					// Lengthen the array for every element, matched or not
-					// 如果候选项来自seed，不管是否匹配都放到unmatched中
+					// 如果备选项来自seed，不管是否匹配都放到unmatched中
 					if ( seed ) {
 						unmatched.push( elem );
 					}
