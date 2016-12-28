@@ -1249,10 +1249,15 @@ Expr = Sizzle.selectors = {
 
 				return operator === "=" ? result === check :
 					operator === "!=" ? result !== check :
+					// 以check开头
 					operator === "^=" ? check && result.indexOf( check ) === 0 :
+					// check出现在任意位置
 					operator === "*=" ? check && result.indexOf( check ) > -1 :
+					// 以check结尾
 					operator === "$=" ? check && result.slice( -check.length ) === check :
+					// 先将所有空白符换成空格，首尾拼接空格，然后判断含有check，这个时候的check经过preFilter处理后已经首尾拼接了空格
 					operator === "~=" ? ( " " + result.replace( rwhitespace, " " ) + " " ).indexOf( check ) > -1 :
+					// 等于check 或 以check + '-'开头
 					operator === "|=" ? result === check || result.slice( 0, check.length + 1 ) === check + "-" :
 					false;
 			};
