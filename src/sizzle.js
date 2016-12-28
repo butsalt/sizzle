@@ -1689,6 +1689,7 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 			tokens.push({
 				value: matched,
 				// Cast descendant combinators to space
+				// 如果匹配到的是一个whitespace，就把它替换成' '
 				type: match[0].replace( rtrim, " " )
 			});
 			soFar = soFar.slice( matched.length );
