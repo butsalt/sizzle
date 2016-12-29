@@ -1198,19 +1198,28 @@ Expr = Sizzle.selectors = {
 			var excess,
 				unquoted = !match[6] && match[2];
 
+			// 在未遭遇关系选择器前soFar的解析是在Expr.filter中依次匹配的
+			// :nth-child(1):nth-last-child(1)
+			// :nth-child(1)通过Expr.filter['CHILD']匹配
+			// :nth-last-child(1)可以通过Expr.filter['PSEUDO']匹配，这里通过返回假值来避免匹配成功
 			if ( matchExpr["CHILD"].test( match[0] ) ) {
 				return null;
 			}
 
 			// Accept quoted arguments as-is
+			// :langh('ch') => 'ch' => ch
 			if ( match[3] ) {
 				match[2] = match[4] || match[5] || "";
 
 			// Strip excess characters from unquoted arguments
+			// PSEUDO内的选择器语句有pseudo选择器
 			} else if ( unquoted && rpseudo.test( unquoted ) &&
 				// Get excess from tokenize (recursively)
+				// 返回的是unquoted经解析后剩余的无法解析的长度
 				(excess = tokenize( unquoted, true )) &&
 				// advance to the next closing parenthesis
+				// 从剩余开始的下标起寻找')'
+				// 
 				(excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length) ) {
 
 				// excess is a negative index
