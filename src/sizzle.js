@@ -1980,6 +1980,7 @@ function matcherFromTokens( tokens ) {
 		// 如果存在leadingRelative，对应的tokens[0]已经被作为implicitRelative处理了，所以i直接从1开始处理
 		i = leadingRelative ? 1 : 0,
 
+		// 检查元素是否在上下文中
 		// The foundational matcher ensures that elements are reachable from top-level context(s)
 		matchContext = addCombinator( function( elem ) {
 			return elem === checkContext;
