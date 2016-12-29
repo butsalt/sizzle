@@ -1977,6 +1977,7 @@ function matcherFromTokens( tokens ) {
 		len = tokens.length,
 		leadingRelative = Expr.relative[ tokens[0].type ],
 		implicitRelative = leadingRelative || Expr.relative[" "],
+		// 如果存在leadingRelative，对应的tokens[0]已经被作为implicitRelative处理了，所以i直接从1开始处理
 		i = leadingRelative ? 1 : 0,
 
 		// The foundational matcher ensures that elements are reachable from top-level context(s)
@@ -1987,7 +1988,9 @@ function matcherFromTokens( tokens ) {
 			return indexOf( checkContext, elem ) > -1;
 		}, implicitRelative, true ),
 		matchers = [ function( elem, context, xml ) {
+			// 
 			var ret = ( !leadingRelative && ( xml || context !== outermostContext ) ) || (
+				// 没有nodeType说明context是数组
 				(checkContext = context).nodeType ?
 					matchContext( elem, context, xml ) :
 					matchAnyContext( elem, context, xml ) );
