@@ -1215,11 +1215,11 @@ Expr = Sizzle.selectors = {
 			// PSEUDO内的选择器语句有pseudo选择器
 			} else if ( unquoted && rpseudo.test( unquoted ) &&
 				// Get excess from tokenize (recursively)
-				// 返回的是unquoted经解析后剩余的无法解析的长度
+				// 返回的是unquoted经解析后剩余的无法解析的剩余部分的长度
 				(excess = tokenize( unquoted, true )) &&
 				// advance to the next closing parenthesis
-				// 从剩余开始的下标起寻找')'
-				// 
+				// 从剩余部分开始的下标起寻找')'
+				// excess最终标记的是')'在unquoted从末尾起的的index
 				(excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length) ) {
 
 				// excess is a negative index
