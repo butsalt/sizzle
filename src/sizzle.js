@@ -196,6 +196,8 @@ var i,
 		function( elem ) {
 			return elem.disabled === true && elem.nodeName.toLowerCase() === "fieldset";
 		},
+		// fieldset legend el，这种情况下即使fieldset处于disabled状态，el也不会是disabled的
+		//所以在通过parentNode向上遍历时，如果遇到legend，就要跳过检查legend上一层的fieldset
 		{ dir: "parentNode", next: "legend" }
 	);
 
