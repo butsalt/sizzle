@@ -1217,7 +1217,7 @@ Expr = Sizzle.selectors = {
 				// Get excess from tokenize (recursively)
 				// 返回的是unquoted经解析后剩余的无法解析的剩余部分的长度
 				// 原因是贪婪匹配导致匹配多了
-				// 比如:not(.class:contain('span')):eq(3)
+				// 比如:not(.class:contain("span")):eq(3)
 				(excess = tokenize( unquoted, true )) &&
 				// advance to the next closing parenthesis
 				// 从剩余部分开始的下标起寻找')'
